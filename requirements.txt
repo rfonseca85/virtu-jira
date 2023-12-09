@@ -1,0 +1,7 @@
+streamlit
+streamlit-extras
+jira~=3.5.2
+pandas~=2.1.1
+matplotlib
+numpy
+streamlit-option-menu

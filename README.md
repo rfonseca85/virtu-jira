@@ -1,9 +1,10 @@
 # Virtu.jira
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://virtu-jira.streamlit.app/)
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/rfonseca85)
 
 **Virtu.jira** is a powerful tool designed to streamline project management by providing a seamless interface for searching and analyzing Jira issues. With its ability to calculate project costs based on development and review time, Virtu.jira simplifies project planning and budgeting, making it an indispensable asset for agile teams and project managers.
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/rfonseca85)
 
 ## Table of Contents
 

@@ -1,5 +1,8 @@
 import streamlit as st
+from streamlit_extras.badges import badge
 import src.pages.menu as menu
+
+
 # Return the selected Page content
 st.set_page_config(
     page_title="Virtu.jira",
@@ -10,6 +13,13 @@ st.set_page_config(
 
 menu.page()
 
+with st.sidebar:
+    st.write("")
+    st.write("")
+    st.write("")
+    badge(type="buymeacoffee", name="rfonseca85")
+    badge(type="github", name="rfonseca85/virtu-jira")
+    
 
 
 

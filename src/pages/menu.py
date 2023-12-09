@@ -80,6 +80,7 @@ def page():
         menu_selected = option_menu(company_name, ["Project Cost", "Project Scope (TBD)", 'Settings'],
                                     icons=['currency-dollar', 'bar-chart', "gear"],
                                     menu_icon="rocket-takeoff", default_index=0, orientation="vertical")
+        
     
     if menu_selected == "Project Cost":
         return project_cost.main()
@@ -89,6 +90,8 @@ def page():
         return settings.main()
     else:
         return st.write("Error")
+    
 
 
-1
+
+

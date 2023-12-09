@@ -16,7 +16,6 @@ menu.page()
 with st.sidebar:
     st.write("")
     st.write("")
-    st.write("")
     badge(type="buymeacoffee", name="rfonseca85")
     badge(type="github", name="rfonseca85/virtu-jira")
     

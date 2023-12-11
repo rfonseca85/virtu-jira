@@ -5,3 +5,4 @@ pandas~=2.1.1
 matplotlib
 numpy
 streamlit-option-menu
+streamlit_shadcn_ui

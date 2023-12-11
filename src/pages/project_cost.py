@@ -3,6 +3,7 @@ from streamlit_extras.stylable_container import stylable_container
 import src.jira_config as config
 from jira import JIRA
 import pandas as pd
+import streamlit_shadcn_ui as ui
 
 ######################################## Retrieve data from Jira ########################################
 def calculate_time(start_date, end_date):
@@ -86,9 +87,9 @@ def retrieve_jira_data_by_jql(jql, story_points_df, cost_dev_per_day, percentage
                     'Description': issue.fields.summary,
                     'Story Points': story_points,
                     'Estimated Dev Days': estimated_time_from_story_points,
-                    'Estimated Cost': estimated_cost,
+                    'Estimated Cost': f'{int(estimated_cost):,}',
                     'Actual Dev Days': development_time,
-                    'Actual Cost': actual_cost,
+                    'Actual Cost': f'{int(actual_cost):,}',
                 }
 
                 # Create a temporary DataFrame and concatenate it with the main DataFrame
@@ -152,35 +153,42 @@ def main():
 
     if jql or epic_number:
         listOfWorklog = retrieve_jira_data_by_jql(jql, story_points_df, cost_dev_per_day, percentage_dev_time, percentage_review_time)
-        with stylable_container(
-                key="container_with_border1",
-                css_styles="""
-                {
-                    border: 2px solid rgba(49, 51, 63, 0.2);
-                    border-radius: 0.5rem;
-                    padding: calc(1em - 1px);
-                    background-color: #F0F0F0;
-                }
-                """,
-        ):
-            st.dataframe(listOfWorklog, hide_index=True)
 
-            # Define the columns of the DataFrame including the two extra columns
-            columns = ['Total Estimated Dev Days', 'Total Estimated Cost', 'Total Actual Dev Days', 'Total Actual Cost']
-            total = pd.DataFrame(columns=columns)
-            total_data = {
-                'Total Estimated Dev Days': listOfWorklog["Estimated Dev Days"].sum(),
-                'Total Estimated Cost': listOfWorklog["Estimated Cost"].sum(),  # Assuming $980 per day
-                'Total Actual Dev Days': listOfWorklog["Actual Dev Days"].sum(),
-                'Total Actual Cost': listOfWorklog["Actual Cost"].sum(),  # Assuming $980 per day
-            }
-            total = pd.concat([total, pd.DataFrame(total_data, index=[0])], ignore_index=True)
 
-            st.dataframe(total, hide_index=True)
+        ######################################## Metrics Dataframe ########################################
 
-            if show_chart:
-                st.bar_chart(listOfWorklog, x="Issue Key", y=["Estimated Dev Days", "Actual Dev Days"], color=["#FF0000", "#0000FF"])
+        ui.table(data=listOfWorklog, maxHeight=300)
 
+
+        ######################################## Total Cards ########################################
+        
+        total_estimated_dev_day = 0
+        total_estimated_cost = 0
+        total_actual_dev_days = 0
+        total_actual_cost = 0
+
+        for index, row in listOfWorklog.iterrows():
+            total_estimated_dev_day = total_estimated_dev_day + int(row['Estimated Dev Days'])
+            total_estimated_cost = total_estimated_cost + int(row['Estimated Cost'].replace(',', ''))
+            total_actual_dev_days = total_actual_dev_days + int(row['Actual Dev Days'])
+            total_actual_cost = total_actual_cost + int(row['Actual Cost'].replace(',', ''))
+
+
+        cols = st.columns(4)
+        with cols[0]:
+            ui.metric_card(title="Total Estimated", content=str(total_estimated_dev_day) + " dev days", description="based on story points", key="card1")
+        with cols[1]:
+            ui.metric_card(title="Estimated Cost", content="$" + f'{int(total_estimated_cost):,}', description="based on $" + str(cost_dev_per_day) + " per dev day", key="card2")
+        with cols[2]:
+            ui.metric_card(title="Total Actual", content=str(total_actual_dev_days) + " dev days", description="based on story points", key="card3")
+        with cols[3]:
+            ui.metric_card(title="Total Actual Cost", content="$" + f'{int(total_actual_cost):,}', description="based on $" + str(cost_dev_per_day) + " per dev day", key="card4")        
+
+        ######################################## Charts ########################################
+        if show_chart:
+            st.bar_chart(listOfWorklog, x="Issue Key", y=["Estimated Dev Days", "Actual Dev Days"], color=["#FF0000", "#0000FF"])
+
+        st.caption("* Dev day definition based on the columns 'In Progress' and 'Review'" + " - now its configured as " + str(percentage_dev_time) + "% for development and " + str(percentage_review_time) + "% for review columns")
 
 #########################################################################################
 

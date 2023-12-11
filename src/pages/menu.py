@@ -64,7 +64,7 @@ def page():
         }}
 
         .st-emotion-cache-2lh61o {{
-            width: 95%;
+            width: 100%;
         }}
                  
     </style>

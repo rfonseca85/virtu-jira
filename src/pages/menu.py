@@ -1,6 +1,7 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 import src.pages.project_cost as project_cost
+import src.pages.capacity_calculator as capacity_calculator
 import src.pages.project_scope as project_scope
 import src.pages.settings as settings
 
@@ -81,9 +82,10 @@ def page():
                                     icons=['currency-dollar', 'bar-chart', "gear"],
                                     menu_icon="rocket-takeoff", default_index=0, orientation="vertical")
         
-    
     if menu_selected == "Project Cost":
         return project_cost.main()
+    elif menu_selected == "Capacity Calculator":
+        return capacity_calculator.main()
     elif menu_selected == "Project Scope (TBD)":
         return project_scope.main()
     elif menu_selected == "Settings":

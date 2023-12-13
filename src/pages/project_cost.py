@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit_extras.stylable_container import stylable_container
 import src.jira_config as config
 from jira import JIRA
 import pandas as pd

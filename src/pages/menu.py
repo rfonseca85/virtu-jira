@@ -78,8 +78,8 @@ def page():
     with st.sidebar:
         # CSS style definitions
         company_name = "Virtu.jira"
-        menu_selected = option_menu(company_name, ["Project Cost", "Project Scope (TBD)", 'Settings'],
-                                    icons=['currency-dollar', 'bar-chart', "gear"],
+        menu_selected = option_menu(company_name, ["Project Cost", "Capacity Calculator", "Project Scope (TBD)", 'Settings'],
+                                    icons=['currency-dollar', 'battery-half', 'bar-chart', "gear"],
                                     menu_icon="rocket-takeoff", default_index=0, orientation="vertical")
         
     if menu_selected == "Project Cost":

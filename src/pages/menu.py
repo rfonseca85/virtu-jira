@@ -78,14 +78,16 @@ def page():
     with st.sidebar:
         # CSS style definitions
         company_name = "Virtu.jira"
-        menu_selected = option_menu(company_name, ["Project Cost", "Capacity Calculator", "Project Scope (TBD)", 'Settings'],
-                                    icons=['currency-dollar', 'battery-half', 'bar-chart', "gear"],
+        menu_selected = option_menu(company_name, ["Project Cost", "Sprint Capacity", "Period/Quarter Capacity", "Project Scope (TBD)", 'Settings'],
+                                    icons=['currency-dollar', 'battery-half', 'calendar', 'bar-chart', "gear"],
                                     menu_icon="rocket-takeoff", default_index=0, orientation="vertical")
         
     if menu_selected == "Project Cost":
         return project_cost.main()
-    elif menu_selected == "Capacity Calculator":
-        return capacity_calculator.main()
+    elif menu_selected == "Sprint Capacity":
+        return capacity_calculator.sprint_capacity()
+    elif menu_selected == "Period/Quarter Capacity":
+        return capacity_calculator.period_capacity()
     elif menu_selected == "Project Scope (TBD)":
         return project_scope.main()
     elif menu_selected == "Settings":
